@@ -14,7 +14,7 @@
 		<jboss-fuse-bom.version>6.2.1.redhat-159</jboss-fuse-bom.version>
 		<camel-version>2.15.1.redhat-621159</camel-version>
 		<camel-jackson-version>2.15.1.redhat-621084</camel-jackson-version>
-        	<slf4j.version>1.7.5</slf4j.version>
+		<slf4j.version>1.7.5</slf4j.version>
 		<logback-version>1.1.7</logback-version>
 		<cxf-codegen-plugin.version>3.0.4.redhat-621159</cxf-codegen-plugin.version>
 		<cxf-version>3.0.4.redhat-621159</cxf-version>
@@ -37,6 +37,11 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
 			<version>${camel-version}</version>
 		</dependency>
 		<dependency>
@@ -93,6 +98,13 @@
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-maven-plugin</artifactId>
+				<configuration>
+					<applicationContextUri>META-INF/spring/*.xml</applicationContextUri>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	
