@@ -7,32 +7,30 @@
           http://camel.apache.org/schema/spring
           http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+        <c:camelContext id="fileActivitiContext" trace="false">
 
-        <c:camelContext id="fileActivitiContext" trace="true">
-
-            <c:bean id="httpAuth" class="org.apache.camel.component.http.HttpConfiguration">
-                <property name="authMethod" value="Basic"/>
-                <property name="authUsername" value="user"/>
-                <property name="authPassword" value="password"/>
-            </c:bean>
-
-            <bean id="http" class="org.apache.camel.component.http.HttpComponent">
-                <property name="camelContext" ref="camel"/>
-                <property name="httpConfiguration" ref="httpAuth"/>
-            </bean>
-
-            <c:route id="fileActivitiRoute">
+            <c:route id="activitiBoot">
                 <c:from uri="file:///Users/elvis/opt/gitrepo/activiti-demo/processo?fileName=startProcess.json" />
-                <!--
                 <c:setHeader headerName="Exchange.HTTP_METHOD">
                     <c:constant>GET</c:constant>
+                </c:setHeader>
+                <c:log message="######################### - Body: ${body}"/>
+                <c:to uri="direct:activitiStartProcess" />
+            </c:route>
+
+            <c:route id="activitiStartProcess">
+                <c:from uri="direct:activitiStartProcess" />
+                <c:setHeader headerName="Exchange.HTTP_METHOD">
+                    <c:constant>POST</c:constant>
                 </c:setHeader>
                 <c:setHeader headerName="Exchange.CONTENT_TYPE">
                     <c:constant>application/json</c:constant>
                 </c:setHeader>
-                -->
-                <c:to uri="jetty:http://localhost:8080/activiti-rest/service/repository/process-definitions?authMethod=Basic&amp;authUsername=kermit&amp;authPassword=kermit" />
+                <c:log message="######################### - Starting Process"/>
+                <c:to uri="http://localhost:8080/activiti-rest/service/runtime/process-instances?authMethod=Basic&amp;authUsername=kermit&amp;authPassword=kermit" />
+                <c:log message="${body}"/>
             </c:route>
+
         </c:camelContext>
 
 </beans>

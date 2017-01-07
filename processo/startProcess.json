@@ -1,11 +1,11 @@
 {
-  "processDefinitionKey":"simpleApprovalProcess:1:38",
+  "processDefinitionKey":"simpleApprovalProcess",
   "businessKey":"myBusinessKey",
   "tenantId": "tenant1",
   "variables": [
     {
       "name":"myVar",
-      "value":"This is a variable",
+      "value":"This is a variable"
     }
   ]
 }
